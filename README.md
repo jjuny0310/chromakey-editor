@@ -31,3 +31,6 @@ pip install -r requirements.txt
 
 
 ## 미리보기
+![1](https://user-images.githubusercontent.com/59381113/118110024-de80d080-b41c-11eb-88c9-4c6062755c3f.gif)
+---
+![2](https://user-images.githubusercontent.com/59381113/118110030-e04a9400-b41c-11eb-8ba1-45673f8accb6.gif)
