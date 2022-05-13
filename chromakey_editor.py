@@ -107,10 +107,10 @@ def br_mouse_callback(event, x, y, flags, param):
         # 이미지 넣을 때 파란색 사각형 제거
         background_copy = np.copy(brgImg)
 
-        # y축상의 시작점과 끝점이 바뀌었으면 두 좌표를 바꾼다.
+        # y축상의 시작점과 끝점이 바뀌었으면 두 좌표를 바꿈.
         if br_s_y > br_e_y:
             br_s_y, br_e_y = br_e_y, br_s_y
-        # x축상의 시작점과 끝점이 바뀌었으면 두 좌표를 바꾼다.
+        # x축상의 시작점과 끝점이 바뀌었으면 두 좌표를 바꿈.
         if br_s_x > br_e_x:
             br_s_x, br_e_x = br_e_x, br_s_x
 
@@ -130,9 +130,10 @@ def br_mouse_callback(event, x, y, flags, param):
             # Crop 이미지를 GRAYSCALE로 변환
             cropGray = cv.cvtColor(resize_cropImg, cv.COLOR_BGR2GRAY)
 
-            # 픽셀값이 10이상이면 흰색, 10미만이면 검정색으로 표시
+            # 픽셀값이 10이상이면 흰색, 10미만이면 검정색으로 표시(마스크 추출)
             _, mask = cv.threshold(cropGray, 10, 255, cv.THRESH_BINARY)
-            mask_inv = ~mask   # 마스크 반전
+            # 마스크 반전
+            mask_inv = ~mask
 
             # 배경 이미지에서 Crop이미지 크기만큼의 영역에 Crop이미지의 모양만 0값이 부여(검정색으로)
             crop_black = cv.bitwise_and(background_cut, background_cut, mask=mask_inv)
@@ -190,7 +191,7 @@ if __name__ == '__main__':
         image_copy_HSV = cv.cvtColor(image_copy, cv.COLOR_BGR2HSV)
 
         # H,S,V값 트랙바로 조절
-        # 트랙바 값(H,S,V), 1/50값으로 10까지 올리면 최종 0.8 ~ 1.2범위로 설정(+-20% 범위)
+        # 트랙바 값(H,S,V), 1칸당 1/50값으로 50까지 올리면 최종 0 ~ 2범위로 설정(+-100% 범위)
         h = cv.getTrackbarPos("H", "A") / 50
         v = cv.getTrackbarPos("V", "A") / 50
         s = cv.getTrackbarPos("S", "A") / 50
@@ -229,7 +230,7 @@ if __name__ == '__main__':
             # 마스크 반전(클릭한 배경화소를 하얀색-> 검은색으로 변경, 그래야 bitwise_and 로 배경만 제거 가능)
             mask_inv = ~mask
 
-            # 마스크의 검정색 부분(범위외부)만 image_copy에서 보이게 설정
+            # 마스크의 하얀색 부분(배경 제외)만 image_copy에서 보이게 설정
             resultImg = cv.bitwise_and(image_copy, image_copy, mask=mask_inv)
             cv.imshow('A', resultImg)
 
